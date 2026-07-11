@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Acesso — Caverna das Guerreiras</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6914;
+    --dark: #0A0A08;
+    --dark-2: #111108;
+    --dark-3: #1A1A12;
+    --dark-4: #222218;
+    --white: #F5F0E8;
+    --white-dim: rgba(245,240,232,0.65);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--dark);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 90px 24px 60px; text-align: center; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .logo-area { position: relative; z-index: 2; margin-bottom: 32px; }
+  .logo-emblem { font-family: 'Cormorant Garamond', serif; font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); opacity: 0.8; margin-bottom: 6px; }
+  .logo-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 3.5vw, 32px); font-weight: 300; letter-spacing: 3px; color: var(--white); line-height: 1; text-transform: uppercase; }
+  .logo-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 16px auto 0; }
+
+  .urgency-badge {
+    position: relative; z-index: 2;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.4); border-radius: 100px;
+    padding: 10px 24px; font-size: 12px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-light);
+    margin-bottom: 32px;
+  }
+  .urgency-badge::before { content: '✦'; font-size: 10px; }
+  .urgency-badge::after  { content: '✦'; font-size: 10px; }
+
+  .hero-headline { position: relative; z-index: 2; font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 6.5vw, 62px); font-weight: 300; line-height: 1.15; margin-bottom: 18px; max-width: 680px; }
+  .hero-headline em { font-style: italic; color: var(--gold); font-weight: 600; }
+
+  .hero-sub { position: relative; z-index: 2; font-size: 14px; font-weight: 300; color: var(--white-dim); max-width: 460px; line-height: 1.8; }
+
+  /* ── DIVIDERS ── */
+  .divider { display: flex; align-items: center; gap: 20px; padding: 50px 24px 0; max-width: 900px; margin: 0 auto; }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .divider-icon { color: var(--gold); font-size: 18px; opacity: 0.7; }
+
+  /* ── LINKS ── */
+  .links-section { padding: 50px 24px 90px; max-width: 720px; margin: 0 auto; position: relative; z-index: 2; }
+
+  .link-stack { display: flex; flex-direction: column; gap: 16px; }
+
+  .link-row {
+    background: var(--dark-3);
+    border: 1px solid rgba(201,168,76,0.22);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: border-color 0.2s ease;
+  }
+  .link-row:hover { border-color: var(--gold); }
+
+  .link-row.featured { border-color: rgba(201,168,76,0.4); background: var(--dark-4); }
+
+  .link-num { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 22px; min-width: 30px; flex-shrink: 0; text-align: center; }
+  .link-info { flex-grow: 1; min-width: 0; }
+  .link-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 3px; line-height: 1.2; }
+  .link-desc { font-size: 12.5px; color: var(--white-dim); line-height: 1.5; font-weight: 300; }
+
+  .link-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 4px;
+    transition: color 0.2s ease;
+    flex-shrink: 0; white-space: nowrap;
+  }
+  .link-btn:hover { color: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; padding: 30px 24px 50px; border-top: 1px solid rgba(201,168,76,0.1); position: relative; z-index: 2; }
+  .footer p { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--white-dim); }
+
+  @media (max-width: 560px) {
+    .link-row { flex-wrap: wrap; }
+    .link-icon { display: none; }
+    .link-btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="logo-area">
+    <div class="logo-emblem">Caverna das</div>
+    <div class="logo-name">Guerreiras</div>
+    <div class="logo-line"></div>
+  </div>
+
+  <div class="urgency-badge">Sua Central de Acesso</div>
+
+  <h1 class="hero-headline">Links que vão te guiar na jornada da <em>Caverna</em></h1>
+
+  <p class="hero-sub">Guerreira, aqui estão os seus acessos principais. Sempre que precisar, é aqui que você volta.</p>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-icon">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<section class="links-section">
+  <div class="link-stack">
+
+    <div class="link-row">
+      <div class="link-num">01</div>
+      <div class="link-info">
+        <div class="link-title">App Caverna Azul</div>
+        <div class="link-desc">Sua ferramenta de construção do método — Lugar de Fala, Posicionamento, Método Autoral, Produtos e Linha Editorial.</div>
+      </div>
+      <a href="https://jadettorress-caverna.github.io/App-CavernaAzul/" target="_blank" class="link-btn">Usar →</a>
+    </div>
+
+    <div class="link-row">
+      <div class="link-num">02</div>
+      <div class="link-info">
+        <div class="link-title">App Caverna Vermelha</div>
+        <div class="link-desc">Sua ferramenta de estruturação comercial — Oferta Estruturada, Funil de Captação, Processo Comercial e Onboarding e Entrega.</div>
+      </div>
+      <a href="https://jadettorress-caverna.github.io/AppCavernaVermelha/" target="_blank" class="link-btn">Usar →</a>
+    </div>
+
+    <div class="link-row">
+      <div class="link-num">03</div>
+      <div class="link-info">
+        <div class="link-title">App Cubo Mágico</div>
+        <div class="link-desc">Sua ferramenta de organização estratégica da linha editorial e produção e distribuição de conteúdo.</div>
+      </div>
+      <a href="https://jadettorress-caverna.github.io/cuboappmagico/" target="_blank" class="link-btn">Usar →</a>
+    </div>
+
+    <div class="link-row">
+      <div class="link-num">04</div>
+      <div class="link-info">
+        <div class="link-title">Calendário Campos de Batalha</div>
+        <div class="link-desc">Acompanhe as sessões ao vivo e registre sua participação nos encontros mensais.</div>
+      </div>
+      <a href="https://jadettorress-caverna.github.io/calendar.campos.batalhas/" target="_blank" class="link-btn">Acessar →</a>
+    </div>
+
+    <div class="link-row featured">
+      <div class="link-num">05</div>
+      <div class="link-info">
+        <div class="link-title">Metodologia Gravada</div>
+        <div class="link-desc">Todas as aulas gravadas da Jornada da Caverna, disponíveis na plataforma Kiwify.</div>
+      </div>
+      <a href="https://kiwify.com.br/" target="_blank" class="link-btn">Assistir →</a>
+    </div>
+
+    <div class="link-row">
+      <div class="link-num">06</div>
+      <div class="link-info">
+        <div class="link-title">Grupo Avisos da Caverna</div>
+        <div class="link-desc">Links, áudios e recados diretos da Jade — fique de olho pra não perder nenhum aviso.</div>
+      </div>
+      <a href="https://chat.whatsapp.com/F8rwQudPuN134vM6euhduO" target="_blank" class="link-btn">Entrar →</a>
+    </div>
+
+    <div class="link-row">
+      <div class="link-num">07</div>
+      <div class="link-info">
+        <div class="link-title">Instagram</div>
+        <div class="link-desc">Acompanhe bastidores, conteúdo e novidades da Jade no Instagram.</div>
+      </div>
+      <a href="https://instagram.com/jadettorress" target="_blank" class="link-btn">Seguir →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Caverna das Guerreiras · Jade Torres</p>
+</footer>
+
+</body>
+</html>
