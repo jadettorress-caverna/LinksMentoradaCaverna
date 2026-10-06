@@ -118,6 +118,39 @@
   .footer { text-align: center; padding: 30px 24px 50px; border-top: 1px solid rgba(201,168,76,0.1); position: relative; z-index: 2; }
   .footer p { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--white-dim); }
 
+  button.link-btn { cursor: pointer; font-family: 'Montserrat', sans-serif; }
+
+  /* ── MODAL "EM BREVE" (paleta Caverna Vermelha) ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10,2,2,0.82);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    position: relative;
+    background: linear-gradient(160deg, #3d0a0a, #1f0505);
+    border: 1px solid rgba(180,130,80,0.45);
+    border-radius: 18px;
+    padding: 48px 36px 38px;
+    max-width: 420px; width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .modal-star { color: #b48250; font-size: 18px; margin-bottom: 18px; }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: #F0EBE8; line-height: 1.2; margin-bottom: 14px; }
+  .modal-title em { font-style: italic; font-weight: 600; color: #b48250; }
+  .modal-text { font-size: 13px; font-weight: 300; line-height: 1.8; color: rgba(240,235,232,0.7); margin-bottom: 28px; }
+  .modal-close {
+    background: transparent; border: 1px solid rgba(180,130,80,0.5); color: #b48250;
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 11px;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 12px 28px; border-radius: 100px; cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .modal-close:hover { background: #b48250; color: #1a0404; }
+
   @media (max-width: 560px) {
     .link-row { flex-wrap: wrap; }
     .link-icon { display: none; }
@@ -162,19 +195,20 @@
     <div class="link-row">
       <div class="link-num">02</div>
       <div class="link-info">
-        <div class="link-title">App Caverna Vermelha</div>
-        <div class="link-desc">Sua ferramenta de estruturação comercial — Oferta Estruturada, Funil de Captação, Processo Comercial e Onboarding e Entrega.</div>
+        <div class="link-title">App Cubo Mágico</div>
+        <div class="link-desc">Sua ferramenta de organização estratégica da linha editorial e produção e distribuição de conteúdo.</div>
       </div>
-      <a href="https://jadettorress-caverna.github.io/AppCavernaVermelha/" target="_blank" class="link-btn">Usar →</a>
+      <a href="https://jadettorress-caverna.github.io/cuboappmagico/" target="_blank" class="link-btn">Usar →</a>
     </div>
 
     <div class="link-row">
       <div class="link-num">03</div>
       <div class="link-info">
-        <div class="link-title">App Cubo Mágico</div>
-        <div class="link-desc">Sua ferramenta de organização estratégica da linha editorial e produção e distribuição de conteúdo.</div>
+        <div class="link-title">App Caverna Vermelha</div>
+        <div class="link-desc">Sua ferramenta de estruturação comercial — Oferta Estruturada, Funil de Captação, Processo Comercial e Onboarding e Entrega.</div>
       </div>
-      <a href="https://jadettorress-caverna.github.io/cuboappmagico/" target="_blank" class="link-btn">Usar →</a>
+      <!-- Quando liberar: trocar este botão por <a href="https://jadettorress-caverna.github.io/AppCavernaVermelha/" target="_blank" class="link-btn">Usar →</a> -->
+      <button type="button" class="link-btn" data-open-modal="modal-vermelha">Usar →</button>
     </div>
 
     <div class="link-row">
@@ -219,6 +253,31 @@
 <footer class="footer">
   <p>Caverna das Guerreiras · Jade Torres</p>
 </footer>
+
+<div class="modal-overlay" id="modal-vermelha" role="dialog" aria-modal="true" aria-labelledby="modal-vermelha-title">
+  <div class="modal-box">
+    <div class="modal-star">✦</div>
+    <h2 class="modal-title" id="modal-vermelha-title">Caverna Vermelha<br><em>liberada em breve</em></h2>
+    <p class="modal-text">Estamos finalizando os últimos detalhes. Assim que estiver pronta, você será avisada no grupo.</p>
+    <button type="button" class="modal-close" data-close-modal>Entendi</button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-open-modal]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById(btn.dataset.openModal).classList.add('open');
+    });
+  });
+  document.querySelectorAll('.modal-overlay').forEach(function (ov) {
+    ov.addEventListener('click', function (e) {
+      if (e.target === ov || e.target.hasAttribute('data-close-modal')) ov.classList.remove('open');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(function (o) { o.classList.remove('open'); });
+  });
+</script>
 
 </body>
 </html>
